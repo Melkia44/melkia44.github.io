@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathieu Lowagie — SDM × Data Engineer</title>
+<meta name="description" content="Service Delivery Manager avec 17 ans d'expérience B2B télécoms, en transition vers le Data Engineering. Portfolio de 9 projets : ETL, NoSQL, ML, MLOps, streaming, RAG, IaC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #05080F;
+    color: #F8FAFC;
+    line-height: 1.6;
+    overflow-x: hidden;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+  }
+
+  /* ===== AMBIENT BACKGROUND ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(6, 182, 212, 0.10), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(167, 139, 250, 0.08), transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ===== LAYOUT ===== */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 10;
+  }
+
+  section {
+    padding: 100px 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(5, 8, 15, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+  nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .nav-logo {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .nav-logo .accent { color: #06B6D4; }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: #94A3B8;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover { color: #F8FAFC; }
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+  }
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    color: #67E8F9;
+    font-weight: 500;
+    margin-bottom: 32px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero-tag .dot {
+    width: 6px;
+    height: 6px;
+    background: #10B981;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #10B981;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  h1 {
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+  h1 .gradient {
+    background: linear-gradient(135deg, #06B6D4 0%, #A78BFA 50%, #06B6D4 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 6s linear infinite;
+    display: inline-block;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  .hero-subtitle {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 400;
+    color: #CBD5E1;
+    max-width: 720px;
+    margin-bottom: 32px;
+    line-height: 1.4;
+  }
+  .hero-description {
+    font-size: 17px;
+    color: #94A3B8;
+    max-width: 640px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+    color: #05080F;
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.3), 0 4px 24px rgba(6, 182, 212, 0.2);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.5), 0 8px 32px rgba(6, 182, 212, 0.35);
+  }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.03);
+    color: #F8FAFC;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #06B6D4;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  h2 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .section-intro {
+    color: #94A3B8;
+    font-size: 17px;
+    max-width: 600px;
+    margin-bottom: 64px;
+    line-height: 1.7;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+    max-width: 800px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    bottom: 12px;
+    width: 1px;
+    background: linear-gradient(180deg, #06B6D4 0%, #A78BFA 100%);
+    opacity: 0.4;
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 48px;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -32px;
+    top: 8px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #05080F;
+    border: 2px solid #06B6D4;
+    box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.1);
+  }
+  .timeline-item.featured::before {
+    background: #06B6D4;
+    box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2), 0 0 20px rgba(6, 182, 212, 0.5);
+  }
+  .timeline-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #06B6D4;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .timeline-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #F8FAFC;
+    margin-bottom: 6px;
+  }
+  .timeline-description {
+    color: #94A3B8;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ===== PROJECTS ===== */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent 30%, rgba(6, 182, 212, 0.4) 50%, transparent 70%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .project-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-4px);
+  }
+  .project-card:hover::before { opacity: 1; }
+  .project-card:hover .project-title { color: #67E8F9; }
+  .project-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+  .project-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #64748B;
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+  .project-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #F8FAFC;
+    margin-bottom: 12px;
+    line-height: 1.3;
+    transition: color 0.2s ease;
+  }
+  .project-description {
+    color: #94A3B8;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #94A3B8;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  .tag.featured {
+    color: #67E8F9;
+    background: rgba(6, 182, 212, 0.08);
+    border-color: rgba(6, 182, 212, 0.2);
+  }
+  .tag.in-progress {
+    color: #FCD34D;
+    background: rgba(251, 191, 36, 0.08);
+    border-color: rgba(251, 191, 36, 0.2);
+  }
+  .project-arrow {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    color: #94A3B8;
+    transition: all 0.3s ease;
+  }
+  .project-card:hover .project-arrow {
+    background: rgba(6, 182, 212, 0.15);
+    color: #67E8F9;
+    transform: translate(2px, -2px);
+  }
+
+  /* ===== SKILLS ===== */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .skill-group {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .skill-group-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #F8FAFC;
+    margin-bottom: 16px;
+  }
+  .skill-group-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .skill-group-icon.cyan { background: rgba(6, 182, 212, 0.12); color: #67E8F9; }
+  .skill-group-icon.violet { background: rgba(167, 139, 250, 0.12); color: #C4B5FD; }
+  .skill-group-icon.emerald { background: rgba(16, 185, 129, 0.12); color: #6EE7B7; }
+  .skill-group-icon.amber { background: rgba(251, 191, 36, 0.12); color: #FCD34D; }
+  .skill-group-icon.pink { background: rgba(244, 114, 182, 0.12); color: #F9A8D4; }
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* ===== CONTACT ===== */
+  .contact-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+      radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .contact-card > * { position: relative; z-index: 1; }
+  .contact-card h2 {
+    margin-bottom: 16px;
+  }
+  .contact-description {
+    color: #94A3B8;
+    font-size: 17px;
+    max-width: 480px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 600px) {
+    .contact-card { padding: 40px 24px; }
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    color: #64748B;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* ===== SCROLL ANIMATIONS ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="nav-logo">Mathieu Lowagie<span class="accent">.</span></div>
+    <ul class="nav-links">
+      <li><a href="#parcours">Parcours</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      Disponible pour de nouvelles opportunités · Nantes / Loire-Atlantique
+    </div>
+    <h1>
+      Mathieu Lowagie<br>
+      SDM <span class="gradient">×</span> Data Engineer
+    </h1>
+    <p class="hero-subtitle">
+      17 ans d'expérience B2B télécoms qui s'augmentent de compétences data engineering pour bâtir des architectures data fiables et opérationnelles.
+    </p>
+    <p class="hero-description">
+      Service Delivery Manager senior chez Nokia, en transition vers un rôle de Data Engineer après un Master 2 OpenClassrooms. Je combine la rigueur opérationnelle d'un manager terrain et la maîtrise technique d'un développeur data pour livrer des projets qui passent du POC à la production.
+    </p>
+    <div class="hero-actions">
+      <a href="#projets" class="btn btn-primary">
+        Voir mes projets
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/mathieulowagie/" target="_blank" rel="noopener" class="btn btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/Melkia44" target="_blank" rel="noopener" class="btn btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PARCOURS -->
+<section id="parcours">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">// Parcours</div>
+      <h2>17 ans de terrain<br>+ une transition Data Engineering</h2>
+      <p class="section-intro">
+        Mon parcours combine la profondeur opérationnelle d'un Service Delivery Manager B2B et l'apprentissage récent et rigoureux du data engineering moderne.
+      </p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="timeline-item featured">
+        <div class="timeline-date">2026 — En cours</div>
+        <div class="timeline-title">Transition Data Engineering & recherche active</div>
+        <div class="timeline-description">
+          Recherche d'un poste de Data Engineer / Chef de projet data dans la région Nantes / Loire-Atlantique. Construction d'un portfolio de 9 projets data couvrant ETL, NoSQL, ML, MLOps, streaming, RAG et infrastructure as code.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2025 — 2026</div>
+        <div class="timeline-title">Master 2 Data Engineering — OpenClassrooms</div>
+        <div class="timeline-description">
+          Formation intensive sur les fondamentaux modernes du data engineering : architectures distribuées, pipelines ETL cloud, MLOps, model serving, streaming temps réel, RAG. Projets pratiques de bout en bout.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2024 — 2026</div>
+        <div class="timeline-title">Master 2 Management de Projet Digital (RNCP niveau 7)</div>
+        <div class="timeline-description">
+          Diplôme obtenu en mars 2026 chez OpenClassrooms / LMD MediaSchool, validant 17 ans de pratique du management projet en télécoms.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2009 — 2026</div>
+        <div class="timeline-title">17 ans Service Delivery Manager — B2B Télécoms</div>
+        <div class="timeline-description">
+          Nokia, SFR, Alcatel-Lucent, Globecast. Pilotage de projets multi-millions d'euros, gestion d'équipes pluri-disciplinaires, interface client grands comptes, certification ITIL v4.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projets">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">// Projets</div>
+      <h2>9 projets<br>du POC à la production</h2>
+      <p class="section-intro">
+        Tous publics sur GitHub, documentés et reproductibles. De l'ETL au RAG en passant par le ML, le streaming et l'infrastructure as code.
+      </p>
+    </div>
+
+    <div class="projects-grid reveal">
+
+      <!-- P5 : MongoDB Storage Stack -->
+      <a href="https://github.com/Melkia44/Mongodb-storage-stack" target="_blank" rel="noopener" class="project-card">
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="project-icon">🔐</div>
+        <div class="project-id">P5 · Storage & Security</div>
+        <div class="project-title">MongoDB Storage Stack</div>
+        <div class="project-description">
+          Stack Docker MongoDB conteneurisée avec RBAC à 4 rôles, ingestion Python validée, Mongo Express admin UI et sauvegardes mongodump automatisées. Données médicales sensibles.
+        </div>
+        <div class="project-tags">
+          <span class="tag featured">MongoDB</span>
+          <span class="tag">RBAC</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Python</span>
+        </div>
+      </a>
+
+      <!-- P6 : Seattle Energy ML -->
+      <a href="https://github.com/Melkia44/Building-energy-consumption-ml" target="_blank" rel="noopener" class="project-card">
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="project-icon">⚡</div>
+        <div class="project-id">P6 · ML + MLOps</div>
+        <div class="project-title">Seattle Building Energy Prediction</div>
+        <div class="project-description">
+          Pipeline ML de prédiction de consommation énergétique. Gradient Boosting + GridSearchCV + API REST validée Pydantic + conteneurisation Docker pour déploiement AWS App Runner.
+        </div>
+        <div class="project-tags">
+          <span class="tag featured">scikit-learn</span>
+          <span class="tag">BentoML</span>
+          <span class="tag">Pydantic</span>
+          <span class="tag">Docker</span>
+        </div>
+      </a>
+
+      <!-- P7 : NosCités -->
+      <a href="https://github.com/Melkia44/Nosql-database-design" target="_blank" rel="noopener" class="project-card">
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="project-icon">🌍</div>
+        <div class="project-id">P7 · NoSQL distribué</div>
+        <div class="project-title">NosCités MongoDB Sharded Cluster</div>
+        <div class="project-description">
+          Cluster MongoDB distribué multi-sites Paris/Lyon avec sharding zoné et ReplicaSet 3 nodes. Analyse Polars et exposition Power BI sur 105k logements Airbnb.
+        </div>
+        <div class="project-tags">
+          <span class="tag featured">MongoDB</span>
+          <span class="tag">Sharding</span>
+          <span class="tag">Polars</span>
+          <span class="tag">Power BI</span>
+        </div>
+      </a>
+
+      <!-- P8 : Forecast AWS -->
+      <a href="https://github.com/Melkia44/Forecast-aws-airbyte-etl" target="_blank" rel="noopener" class="project-card">
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="project-icon">☁️</div>
+        <div class="project-id">P8 · ETL Cloud</div>
+        <div class="project-title">Forecast 2.0 — Pipeline AWS</div>
+        <div class="project-description">
+          Ingestion multi-sources météo (Airbyte → S3 → MongoDB ECS Fargate). Pipeline idempotent avec validation à 2 niveaux : règles Python + validation MongoDB $jsonSchema.
+        </div>
+        <div class="project-tags">
+          <span class="tag featured">AWS</span>
+          <span class="tag">Airbyte</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Docker</span>
+        </div>
+      </a>
+
+      <!-- P9 : Streaming InduTechData -->
+      <a href="https://github.com/Melkia44/Kafka-spark-streaming-pipeline" target="_blank" rel="noopener" class="project-card">
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="project-icon">🚀</div>
+        <div class="project-id">P9 · Streaming temps réel</div>
+        <div class="project-title">InduTechData Streaming POC</div>
+        <div class="project-description">
+          POC de gestion de tickets clients en temps réel : Redpanda (Kafka API) + PySpark Structured Streaming + export Parquet. Architecture événementielle pour passer du batch au temps réel.
+        </div>
+        <div class="project-tags">
+          <span class="tag featured">Kafka</span>
+          <span class="tag">Spark</span>
+          <span class="tag">Redpanda</span>
+          <span class="tag">Parquet</span>
+        </div>
+      </a>
+
+      <!-- P10 : BottleNeck Kestra -->
+      <a href="https://github.com/Melkia44/Mlops-orchestration-pipeline" target="_blank" rel="noopener" class="project-card">
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="project-icon">🍷</div>
+        <div class="project-id">P10 · Orchestration</div>
+        <div class="project-title">BottleNeck Kestra Pipeline</div>
+        <div class="project-description">
+          Pipeline ETL orchestré avec Kestra : fusion 3 sources Excel, calcul CA, classification ML (régex + Z-Score), 8 tests qualité automatisés et alerting SMTP.
+        </div>
+        <div class="project-tags">
+          <span class="tag featured">Kestra</span>
+          <span class="tag">Python</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Z-Score</span>
+        </div>
+      </a>
+
+      <!-- P11 : RAG Chatbot OpenDataSoft -->
+      <a href="https://github.com/Melkia44/Rag-chatbot-mistral-opendatasoft" target="_blank" rel="noopener" class="project-card">
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="project-icon">💬</div>
+        <div class="project-id">P11 · GenAI · RAG</div>
+        <div class="project-title">RAG Chatbot OpenDataSoft</div>
+        <div class="project-description">
+          Chatbot RAG conversationnel d'exploration des données ouvertes françaises. Mistral AI + LangChain + ChromaDB. POC d'interface naturelle sur les jeux de données publics OpenDataSoft.
+        </div>
+        <div class="project-tags">
+          <span class="tag featured">Mistral AI</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">ChromaDB</span>
+          <span class="tag">Python</span>
+        </div>
+      </a>
+
+      <!-- P12 : Data Infrastructure & IaC -->
+      <a href="https://github.com/Melkia44/Data-infrastructure-project" target="_blank" rel="noopener" class="project-card">
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="project-icon">🏗️</div>
+        <div class="project-id">P12 · Infrastructure as Code</div>
+        <div class="project-title">Data Infrastructure & IaC</div>
+        <div class="project-description">
+          Modélisation et déploiement d'infrastructure data : architecture data lake/warehouse, provisioning Terraform, conteneurisation Docker. Cas d'usage analytique entreprise.
+        </div>
+        <div class="project-tags">
+          <span class="tag featured">Terraform</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Cloud</span>
+          <span class="tag">Data Lake</span>
+        </div>
+      </a>
+
+      <!-- P13 : Puls Events RAG MVP -->
+      <a href="https://github.com/Melkia44/Puls-events-rag-mvp" target="_blank" rel="noopener" class="project-card">
+        <div class="project-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </div>
+        <div class="project-icon">🎭</div>
+        <div class="project-id">P13 · POC → MVP</div>
+        <div class="project-title">Puls Events — RAG culturel MVP</div>
+        <div class="project-description">
+          Pipeline RAG (FastAPI + Qdrant + Mistral) sur événements culturels Loire-Atlantique. Ingestion OpenDataSoft, vectorisation, API REST conteneurisée. Projet de fin de M2 Data Engineering.
+        </div>
+        <div class="project-tags">
+          <span class="tag in-progress">En cours</span>
+          <span class="tag featured">Mistral AI</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Qdrant</span>
+          <span class="tag">Docker</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMPETENCES -->
+<section id="competences">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">// Compétences</div>
+      <h2>Stack technique<br>et savoir-faire</h2>
+      <p class="section-intro">
+        Outils maîtrisés pendant les projets du portfolio, complétés par 17 ans d'expérience opérationnelle en management de projet B2B.
+      </p>
+    </div>
+
+    <div class="skills-grid reveal">
+
+      <div class="skill-group">
+        <div class="skill-group-title">
+          <div class="skill-group-icon cyan">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+          </div>
+          Data Engineering
+        </div>
+        <div class="skill-list">
+          <span class="tag">Python</span>
+          <span class="tag">Polars</span>
+          <span class="tag">pandas</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Apache Spark</span>
+          <span class="tag">Airbyte</span>
+          <span class="tag">Parquet</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">
+          <div class="skill-group-icon violet">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 10v6M4.22 4.22l4.24 4.24m7.08 7.08l4.24 4.24M1 12h6m10 0h6M4.22 19.78l4.24-4.24m7.08-7.08l4.24-4.24"/></svg>
+          </div>
+          ML & MLOps
+        </div>
+        <div class="skill-list">
+          <span class="tag">scikit-learn</span>
+          <span class="tag">XGBoost</span>
+          <span class="tag">BentoML</span>
+          <span class="tag">Pydantic</span>
+          <span class="tag">Kestra</span>
+          <span class="tag">GridSearchCV</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">
+          <div class="skill-group-icon emerald">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          </div>
+          Cloud & DevOps
+        </div>
+        <div class="skill-list">
+          <span class="tag">AWS ECS Fargate</span>
+          <span class="tag">AWS S3</span>
+          <span class="tag">AWS EFS</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Docker Compose</span>
+          <span class="tag">Terraform</span>
+          <span class="tag">Git/GitHub</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">
+          <div class="skill-group-icon amber">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+          </div>
+          GenAI · Streaming · BI
+        </div>
+        <div class="skill-list">
+          <span class="tag">Mistral AI</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">Qdrant</span>
+          <span class="tag">ChromaDB</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Apache Kafka</span>
+          <span class="tag">Redpanda</span>
+          <span class="tag">Spark Streaming</span>
+          <span class="tag">Power BI</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">
+          <div class="skill-group-icon pink">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          Management & Pilotage
+        </div>
+        <div class="skill-list">
+          <span class="tag">ITIL v4</span>
+          <span class="tag">Service Delivery</span>
+          <span class="tag">Gestion projet</span>
+          <span class="tag">Direction équipe</span>
+          <span class="tag">B2B Grands Comptes</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">
+          <div class="skill-group-icon cyan">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          Langues & Certifications
+        </div>
+        <div class="skill-list">
+          <span class="tag">Français (natif)</span>
+          <span class="tag">Anglais professionnel</span>
+          <span class="tag">ITIL v4 certifié</span>
+          <span class="tag">M2 RNCP niveau 7</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-card reveal">
+      <div class="section-label">// Contact</div>
+      <h2>Discutons de votre prochain projet data</h2>
+      <p class="contact-description">
+        Basé à Nort-sur-Erdre (44), ouvert aux opportunités sur Nantes / Loire-Atlantique, en présentiel ou en hybride. Disponibilité immédiate.
+      </p>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/mathieulowagie/" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          Me contacter sur LinkedIn
+        </a>
+        <a href="https://github.com/Melkia44" target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          GitHub @Melkia44
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>© 2026 Mathieu Lowagie · Tous droits réservés</p>
+  </div>
+</footer>
+
+<script>
+  // Reveal-on-scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth scroll offset for sticky nav
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
